@@ -21,9 +21,9 @@ public class LKS_SwiftTraceManager: NSObject {
         
         while let m = mirror, let unwrappedCurrClass = currClass {
             m.children.forEach { child in
-                if let child = child as? (label: String?, value: NSObject) {
+                if let child = child as? (label: String?, value: NSObject?) {
                     let label: String? = child.label?.replacingOccurrences(of: "$__lazy_storage_$_", with: "")
-                    let value = child.value
+                    guard let value = child.value else { return }
                     
                     guard (value is UIView) || (value is CALayer) || (value is UIViewController) || (value is UIGestureRecognizer) else {
                         return
